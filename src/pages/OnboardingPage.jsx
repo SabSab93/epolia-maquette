@@ -9,10 +9,13 @@ export function OnboardingPage() {
   const [activeSlide, setActiveSlide] = useState(0)
   const sliderRef = useRef(null)
   const isAutoScrollingRef = useRef(false)
-  const scrollEndTimeoutRef = useRef(null)
+  const lastUserScrollAtRef = useRef(0)
 
   useEffect(() => {
     const interval = window.setInterval(() => {
+      if (Date.now() - lastUserScrollAtRef.current < 2800) {
+        return
+      }
       setActiveSlide((current) => (current + 1) % onboardingSlides.length)
     }, 4200)
 
@@ -37,35 +40,21 @@ export function OnboardingPage() {
     return () => window.clearTimeout(autoDone)
   }, [activeSlide])
 
-  useEffect(() => {
-    return () => {
-      if (scrollEndTimeoutRef.current) {
-        window.clearTimeout(scrollEndTimeoutRef.current)
-      }
-    }
-  }, [])
-
   const handleSliderScroll = () => {
     const slider = sliderRef.current
     if (!slider || isAutoScrollingRef.current) return
+    lastUserScrollAtRef.current = Date.now()
+    const slideWidth = slider.clientWidth
+    if (!slideWidth) return
 
-    if (scrollEndTimeoutRef.current) {
-      window.clearTimeout(scrollEndTimeoutRef.current)
-    }
-
-    scrollEndTimeoutRef.current = window.setTimeout(() => {
-      const slideWidth = slider.clientWidth
-      if (!slideWidth) return
-
-      const nextIndex = Math.round(slider.scrollLeft / slideWidth)
-      setActiveSlide((current) => (nextIndex !== current ? nextIndex : current))
-    }, 120)
+    const nextIndex = Math.round(slider.scrollLeft / slideWidth)
+    setActiveSlide((current) => (nextIndex !== current ? nextIndex : current))
   }
 
   return (
     <div className="epolia-page-bg min-h-screen">
       <div className="mx-auto flex min-h-screen w-full max-w-[430px] flex-col p-5">
-        <div className="mx-auto mt-10 w-full max-w-[360px]">
+        <div className="mt-10 w-full">
           <div className="mb-8 flex items-center justify-center gap-2">
             {onboardingSlides.map((_, index) => (
               <span
@@ -86,13 +75,14 @@ export function OnboardingPage() {
               className="hide-scrollbar flex h-full snap-x snap-mandatory overflow-x-auto scroll-smooth"
             >
               {onboardingSlides.map((slide, index) => (
-                <img
-                  key={`onboarding-slide-${index}`}
-                  src={slide}
-                  alt={`Onboarding ${index + 1}`}
-                  className="h-full w-full min-w-full snap-center rounded-[22px] object-cover"
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                />
+                <div key={`onboarding-slide-${index}`} className="h-full min-w-full snap-center px-1">
+                  <img
+                    src={slide}
+                    alt={`Onboarding ${index + 1}`}
+                    className="h-full w-full rounded-[22px] bg-white/25 object-contain"
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                  />
+                </div>
               ))}
             </div>
           </div>

@@ -15,7 +15,7 @@ export function OnboardingLoadingPage() {
           />
         </div>
 
-        <p className="mt-6 text-base font-semibold text-[#58126A]">Chargement de votre expérience Epolia</p>
+        <p className="mt-6 text-center text-base font-semibold text-[#58126A]">Chargement de votre expérience Epolia</p>
       </div>
     </div>
   )
