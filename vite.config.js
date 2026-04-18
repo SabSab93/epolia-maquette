@@ -7,13 +7,13 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg'],
+      includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
       manifest: {
         name: 'Epolia',
         short_name: 'Epolia',
         description: 'Marketplace mobile PWA entre particuliers et étudiants.',
         theme_color: '#FF661A',
-        background_color: '#FFFFFF',
+        background_color: '#F9F9FB',
         display: 'standalone',
         start_url: '/',
         scope: '/',
