@@ -27,7 +27,7 @@ export function EntryPage() {
     )
 
     const minLoadingDelay = new Promise((resolve) => {
-      window.setTimeout(resolve, 1600)
+      window.setTimeout(resolve, 2400)
     })
 
     Promise.all([Promise.allSettled(preloadImages), minLoadingDelay]).then(() => {
