@@ -46,7 +46,7 @@ export function Home() {
   return (
     <MobileShell withNav>
       <div className="space-y-5 px-4 pb-4 pt-3 text-epolia-text">
-        <header className="sticky top-0 z-20 -mx-4 space-y-3 bg-epolia-background/95 px-4 pb-3 pt-2 backdrop-blur">
+        <header className="sticky top-0 z-20 space-y-3 pt-2">
           <div className="flex items-start justify-between">
             <Logo small />
             {!user ? (
@@ -65,19 +65,17 @@ export function Home() {
             </h2>
           ) : null}
 
-          <div className="rounded-xl bg-white p-2 shadow-sm ring-1 ring-epolia-purple/10">
-            <label htmlFor="search" className="sr-only">
-              Recherche
-            </label>
-            <input
-              id="search"
-              type="search"
-              placeholder="Rechercher une mission ou compétence"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              className="w-full rounded-lg border border-transparent bg-epolia-cream/40 px-3 py-2 text-sm text-epolia-text outline-none transition placeholder:text-epolia-muted focus:border-epolia-orange focus:bg-white"
-            />
-          </div>
+          <label htmlFor="search" className="sr-only">
+            Recherche
+          </label>
+          <input
+            id="search"
+            type="search"
+            placeholder="Rechercher une mission ou compétence"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            className="w-full rounded-lg border border-[#A592D4]/25 bg-white/80 px-3 py-2 text-sm text-epolia-text shadow-sm outline-none transition placeholder:text-epolia-muted focus:border-epolia-orange focus:bg-white"
+          />
 
           <div className="hide-scrollbar flex gap-2 overflow-x-auto pb-1">
             {marketplaceFilters.map((filter) => (
@@ -96,7 +94,7 @@ export function Home() {
             ))}
           </div>
 
-          <div className="mx-auto flex w-fit items-center gap-1 rounded-full bg-white p-1 shadow-sm ring-1 ring-epolia-purple/10">
+          <div className="mx-auto flex w-fit items-center gap-1 rounded-full border border-[#A592D4]/25 bg-white/70 p-1 shadow-sm">
             <button
               type="button"
               onClick={() => setViewMode('list')}

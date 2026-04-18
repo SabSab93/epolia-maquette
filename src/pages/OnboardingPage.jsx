@@ -67,7 +67,7 @@ export function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-epolia-background">
+    <div className="epolia-page-bg min-h-screen">
       <div className="mx-auto flex min-h-screen w-full max-w-[430px] flex-col p-5">
         <div className="mx-auto w-full max-w-[360px]">
           <div className="mb-3 flex items-center justify-center gap-2">
