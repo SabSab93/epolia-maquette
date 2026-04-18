@@ -65,8 +65,8 @@ export function OnboardingPage() {
   return (
     <div className="epolia-page-bg min-h-screen">
       <div className="mx-auto flex min-h-screen w-full max-w-[430px] flex-col p-5">
-        <div className="mx-auto w-full max-w-[360px]">
-          <div className="mb-3 flex items-center justify-center gap-2">
+        <div className="mx-auto mt-10 w-full max-w-[360px]">
+          <div className="mb-8 flex items-center justify-center gap-2">
             {onboardingSlides.map((_, index) => (
               <span
                 key={`onboarding-bar-${index}`}
@@ -79,7 +79,7 @@ export function OnboardingPage() {
             ))}
           </div>
 
-          <div className="relative h-[330px] overflow-hidden rounded-[28px] p-1.5 ring-1 ring-[#A592D4]/25">
+          <div className="relative h-[330px] overflow-hidden rounded-[28px]">
             <div
               ref={sliderRef}
               onScroll={handleSliderScroll}

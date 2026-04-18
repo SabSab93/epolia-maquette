@@ -26,11 +26,11 @@ export function EntryPage() {
         })
     )
 
-    const loadingTimeout = new Promise((resolve) => {
-      window.setTimeout(resolve, 1800)
+    const minLoadingDelay = new Promise((resolve) => {
+      window.setTimeout(resolve, 1600)
     })
 
-    Promise.race([Promise.all(preloadImages), loadingTimeout]).then(() => {
+    Promise.all([Promise.allSettled(preloadImages), minLoadingDelay]).then(() => {
       if (!isCancelled) {
         setIsLoadingOnboarding(false)
       }
