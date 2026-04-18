@@ -8,6 +8,7 @@ import {
   loadStudentRegistrationProgress,
   saveStudentRegistrationProgress
 } from '../utils/studentRegistrationProgress'
+import { getStudentRegistrationProgress } from '../utils/studentRegistrationSteps'
 
 const EMPTY_PROFILE_FORM = {
   lastName: '',
@@ -23,8 +24,6 @@ const EMPTY_PORTFOLIO_FORM = {
   images: [],
   imageNames: []
 }
-
-const steps = ['Créer votre profil', 'Formation', 'Portfolio', 'Présentation', 'Catégories', 'Compétences', 'Qualités']
 
 export function RegisterEtudiantPortfolioPage() {
   const navigate = useNavigate()
@@ -106,7 +105,7 @@ export function RegisterEtudiantPortfolioPage() {
     })
   }, [form, initialData])
 
-  const progress = ((3) / steps.length) * 100
+  const { progressPercent, progressLabel } = getStudentRegistrationProgress(3)
   const canSubmit = Boolean(form.title.trim() && form.description.trim() && form.images.length > 0)
 
   const handleImagesChange = (event) => {
@@ -206,11 +205,12 @@ export function RegisterEtudiantPortfolioPage() {
               <div className="h-2 overflow-hidden rounded-full bg-[#F3E8CC]">
                 <div
                   className="h-full rounded-full bg-[#C3E841] transition-all duration-300"
-                  style={{ width: `${progress}%` }}
+                  style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </section>
           </div>
+          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Ajouter un portfolio</h1>
         </header>
 

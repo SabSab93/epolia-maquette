@@ -7,6 +7,7 @@ import {
   loadStudentRegistrationProgress,
   saveStudentRegistrationProgress
 } from '../utils/studentRegistrationProgress'
+import { getStudentRegistrationProgress } from '../utils/studentRegistrationSteps'
 
 const EMPTY_PROFILE_FORM = {
   lastName: '',
@@ -15,8 +16,6 @@ const EMPTY_PROFILE_FORM = {
   phone: '',
   nif: ''
 }
-
-const steps = ['Créer votre profil', 'Formation', 'Portfolio', 'Présentation', 'Catégories', 'Compétences', 'Qualités', 'Vie perso']
 
 export function RegisterEtudiantQualitiesPage() {
   const navigate = useNavigate()
@@ -104,7 +103,7 @@ export function RegisterEtudiantQualitiesPage() {
     data.lifeOutsideStudies
   ])
 
-  const progress = (7 / steps.length) * 100
+  const { progressPercent, progressLabel } = getStudentRegistrationProgress(7)
 
   const addQuality = (rawValue) => {
     const value = rawValue.trim()
@@ -144,11 +143,12 @@ export function RegisterEtudiantQualitiesPage() {
               <div className="h-2 overflow-hidden rounded-full bg-[#F3E8CC]">
                 <div
                   className="h-full rounded-full bg-[#C3E841] transition-all duration-300"
-                  style={{ width: `${progress}%` }}
+                  style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </section>
           </div>
+          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Vos 5 qualité clés</h1>
         </header>
 

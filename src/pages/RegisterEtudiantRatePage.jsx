@@ -8,6 +8,7 @@ import {
   loadStudentRegistrationProgress,
   saveStudentRegistrationProgress
 } from '../utils/studentRegistrationProgress'
+import { getStudentRegistrationProgress } from '../utils/studentRegistrationSteps'
 
 const EMPTY_PROFILE_FORM = {
   lastName: '',
@@ -18,19 +19,6 @@ const EMPTY_PROFILE_FORM = {
 }
 
 const COMMISSION_RATE = 0.2
-const steps = [
-  'Créer votre profil',
-  'Formation',
-  'Portfolio',
-  'Présentation',
-  'Catégories',
-  'Compétences',
-  'Qualités',
-  'Vie perso',
-  'Disponibilités',
-  'Tarif horaire',
-  'Description'
-]
 
 const parseAmount = (value) => {
   const normalized = value.replace(',', '.').replace(/[^\d.]/g, '')
@@ -170,7 +158,7 @@ export function RegisterEtudiantRatePage() {
     data.studentProfileImage
   ])
 
-  const progress = (10 / steps.length) * 100
+  const { progressPercent, progressLabel } = getStudentRegistrationProgress(10)
 
   return (
     <MobileShell>
@@ -206,11 +194,12 @@ export function RegisterEtudiantRatePage() {
               <div className="h-2 overflow-hidden rounded-full bg-[#F3E8CC]">
                 <div
                   className="h-full rounded-full bg-[#C3E841] transition-all duration-300"
-                  style={{ width: `${progress}%` }}
+                  style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </section>
           </div>
+          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Déterminons votre taux horaire</h1>
           <p className="text-sm text-epolia-muted">
             Indiquez votre tarif affiché, nous calculons automatiquement votre montant net.

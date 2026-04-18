@@ -7,6 +7,7 @@ import {
   loadStudentRegistrationProgress,
   saveStudentRegistrationProgress
 } from '../utils/studentRegistrationProgress'
+import { getStudentRegistrationProgress } from '../utils/studentRegistrationSteps'
 
 const EMPTY_PROFILE_FORM = {
   lastName: '',
@@ -15,8 +16,6 @@ const EMPTY_PROFILE_FORM = {
   phone: '',
   nif: ''
 }
-
-const steps = ['Créer votre profil', 'Formation', 'Portfolio', 'Présentation', 'Catégories', 'Compétences', 'Qualités']
 
 export function RegisterEtudiantPortfoliosPage() {
   const navigate = useNavigate()
@@ -86,7 +85,7 @@ export function RegisterEtudiantPortfoliosPage() {
     })
   }, [data.profileForm, data.formations, portfolios, data.presentationText, data.selectedCategories, data.keySkills, data.keyQualities])
 
-  const progress = ((3) / steps.length) * 100
+  const { progressPercent, progressLabel } = getStudentRegistrationProgress(3)
 
   return (
     <MobileShell>
@@ -116,11 +115,12 @@ export function RegisterEtudiantPortfoliosPage() {
               <div className="h-2 overflow-hidden rounded-full bg-[#F3E8CC]">
                 <div
                   className="h-full rounded-full bg-[#C3E841] transition-all duration-300"
-                  style={{ width: `${progress}%` }}
+                  style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </section>
           </div>
+          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Portfolio & réalisations</h1>
         </header>
 
@@ -159,9 +159,9 @@ export function RegisterEtudiantPortfoliosPage() {
                             }
                           })
                         }
-                        className="inline-flex items-center justify-center text-[#FF661A]"
+                        className="inline-flex h-8 w-8 items-center justify-center text-[#FF661A]"
                       >
-                        <FaEdit className="text-[12px]" aria-hidden="true" />
+                        <FaEdit className="text-[16px]" aria-hidden="true" />
                       </button>
                       <button
                         type="button"
@@ -170,9 +170,9 @@ export function RegisterEtudiantPortfoliosPage() {
                           const nextPortfolios = portfolios.filter((item) => item.id !== portfolio.id)
                           setPortfolios(nextPortfolios)
                         }}
-                        className="inline-flex items-center justify-center text-[#FF661A]"
+                        className="inline-flex h-8 w-8 items-center justify-center text-[#FF661A]"
                       >
-                        <FaTrash className="text-[12px]" aria-hidden="true" />
+                        <FaTrash className="text-[16px]" aria-hidden="true" />
                       </button>
                     </div>
                   </div>

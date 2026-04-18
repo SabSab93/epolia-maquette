@@ -7,6 +7,7 @@ import {
   loadStudentRegistrationProgress,
   saveStudentRegistrationProgress
 } from '../utils/studentRegistrationProgress'
+import { getStudentRegistrationProgress } from '../utils/studentRegistrationSteps'
 
 const EMPTY_PROFILE_FORM = {
   lastName: '',
@@ -15,8 +16,6 @@ const EMPTY_PROFILE_FORM = {
   phone: '',
   nif: ''
 }
-
-const steps = ['Créer votre profil', 'Formation', 'Portfolio', 'Présentation', 'Catégories', 'Compétences', 'Qualités']
 
 export function RegisterEtudiantPresentationPage() {
   const navigate = useNavigate()
@@ -87,7 +86,7 @@ export function RegisterEtudiantPresentationPage() {
     })
   }, [data.profileForm, data.formations, data.portfolios, data.selectedCategories, data.keySkills, data.keyQualities, presentationText])
 
-  const progress = ((4) / steps.length) * 100
+  const { progressPercent, progressLabel } = getStudentRegistrationProgress(4)
   const canContinue = Boolean(presentationText.trim())
 
   return (
@@ -118,11 +117,12 @@ export function RegisterEtudiantPresentationPage() {
               <div className="h-2 overflow-hidden rounded-full bg-[#F3E8CC]">
                 <div
                   className="h-full rounded-full bg-[#C3E841] transition-all duration-300"
-                  style={{ width: `${progress}%` }}
+                  style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </section>
           </div>
+          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Comment souhaitez-vous être présenté ?</h1>
           <p className="text-sm text-epolia-muted">
             Cette description servira à orienter les catégories suggérées (ex: artistique, création, digital).

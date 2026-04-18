@@ -8,6 +8,7 @@ import {
   loadStudentRegistrationProgress,
   saveStudentRegistrationProgress
 } from '../utils/studentRegistrationProgress'
+import { getStudentRegistrationProgress } from '../utils/studentRegistrationSteps'
 
 const EMPTY_PROFILE_FORM = {
   lastName: '',
@@ -16,20 +17,6 @@ const EMPTY_PROFILE_FORM = {
   phone: '',
   nif: ''
 }
-
-const steps = [
-  'Créer votre profil',
-  'Formation',
-  'Portfolio',
-  'Présentation',
-  'Catégories',
-  'Compétences',
-  'Qualités',
-  'Vie perso',
-  'Disponibilités',
-  'Tarif horaire',
-  'Description'
-]
 
 export function RegisterEtudiantAboutPage() {
   const navigate = useNavigate()
@@ -150,7 +137,7 @@ export function RegisterEtudiantAboutPage() {
     profileImage
   ])
 
-  const progress = (11 / steps.length) * 100
+  const { progressPercent, progressLabel } = getStudentRegistrationProgress(11)
 
   const handleImageChange = (event) => {
     const file = event.target.files?.[0]
@@ -199,11 +186,12 @@ export function RegisterEtudiantAboutPage() {
               <div className="h-2 overflow-hidden rounded-full bg-[#F3E8CC]">
                 <div
                   className="h-full rounded-full bg-[#C3E841] transition-all duration-300"
-                  style={{ width: `${progress}%` }}
+                  style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </section>
           </div>
+          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Une description de vous</h1>
 
         </header>

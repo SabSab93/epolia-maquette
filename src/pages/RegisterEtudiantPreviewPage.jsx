@@ -8,8 +8,7 @@ import {
   loadStudentRegistrationProgress,
   saveStudentRegistrationProgress
 } from '../utils/studentRegistrationProgress'
-
-const steps = ['Créer votre profil', 'Formation']
+import { getStudentRegistrationProgress } from '../utils/studentRegistrationSteps'
 
 const EMPTY_PROFILE_FORM = {
   lastName: '',
@@ -85,7 +84,7 @@ export function RegisterEtudiantPreviewPage() {
     })
   }, [currentStep, form, formations, portfolios])
 
-  const progress = ((currentStep + 1) / steps.length) * 100
+  const { progressPercent, progressLabel } = getStudentRegistrationProgress(1)
   const profileStepComplete = Boolean(
     form.lastName.trim() &&
       form.firstName.trim() &&
@@ -116,11 +115,12 @@ export function RegisterEtudiantPreviewPage() {
               <div className="h-2 overflow-hidden rounded-full bg-[#F3E8CC]">
                 <div
                   className="h-full rounded-full bg-[#C3E841] transition-all duration-300"
-                  style={{ width: `${progress}%` }}
+                  style={{ width: `${progressPercent}%` }}
                 />
               </div>
             </section>
           </div>
+          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Inscription étudiant</h1>
         </header>
 
