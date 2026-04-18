@@ -13,7 +13,7 @@ export default defineConfig({
         short_name: 'Epolia',
         description: 'Marketplace mobile PWA entre particuliers et étudiants.',
         theme_color: '#FF661A',
-        background_color: '#F9F9FB',
+        background_color: '#FFFFFF',
         display: 'standalone',
         start_url: '/',
         scope: '/',
