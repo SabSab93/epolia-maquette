@@ -52,10 +52,10 @@ export function OnboardingPage() {
   }
 
   return (
-    <div className="epolia-page-bg min-h-screen">
-      <div className="mx-auto flex min-h-screen w-full max-w-[430px] flex-col p-5">
-        <div className="mt-10 w-full">
-          <div className="mb-8 flex items-center justify-center gap-2">
+    <div className="epolia-page-bg h-[100dvh] overflow-hidden">
+      <div className="mx-auto flex h-[100dvh] w-full max-w-[430px] flex-col overflow-hidden p-5">
+        <div className="mt-4 w-full">
+          <div className="mb-4 flex items-center justify-center gap-2">
             {onboardingSlides.map((_, index) => (
               <span
                 key={`onboarding-bar-${index}`}
@@ -68,18 +68,18 @@ export function OnboardingPage() {
             ))}
           </div>
 
-          <div className="relative h-[330px] overflow-hidden rounded-[28px]">
+          <div className="relative h-[46dvh] min-h-[250px] max-h-[350px] overflow-hidden rounded-[28px]">
             <div
               ref={sliderRef}
               onScroll={handleSliderScroll}
               className="hide-scrollbar flex h-full snap-x snap-mandatory overflow-x-auto scroll-smooth"
             >
               {onboardingSlides.map((slide, index) => (
-                <div key={`onboarding-slide-${index}`} className="h-full min-w-full snap-center px-1">
+                <div key={`onboarding-slide-${index}`} className="h-full min-w-full snap-center">
                   <img
                     src={slide}
                     alt={`Onboarding ${index + 1}`}
-                    className="h-full w-full rounded-[22px] bg-white/25 object-contain"
+                    className="h-full w-full object-contain"
                     loading={index === 0 ? 'eager' : 'lazy'}
                   />
                 </div>
@@ -88,7 +88,7 @@ export function OnboardingPage() {
           </div>
         </div>
 
-        <div className="mt-auto pb-2 pt-6">
+        <div className="mt-auto pb-2 pt-4">
           <div className="mx-auto flex w-full max-w-[320px] flex-col items-center gap-3">
             <PrimaryButton type="button" onClick={() => navigate('/login')}>
               Se connecter
