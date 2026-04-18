@@ -3,6 +3,7 @@ import { HomePage } from './HomePage'
 import { OnboardingPage } from './OnboardingPage'
 import { OnboardingLoadingPage } from './OnboardingLoadingPage'
 import { useAuth } from '../contexts/AuthContext'
+import { onboardingSlides } from '../data/onboardingSlides'
 
 export function EntryPage() {
   const { user } = useAuth()
@@ -13,11 +14,7 @@ export function EntryPage() {
 
     let isCancelled = false
 
-    const imageSources = [
-      new URL('../assets/images/auth/connexion-img-1.jpg', import.meta.url).href,
-      new URL('../assets/images/auth/connexion-img-2.jpg', import.meta.url).href,
-      new URL('../assets/images/auth/connexion-img-3.jpg', import.meta.url).href
-    ]
+    const imageSources = onboardingSlides
 
     const preloadImages = imageSources.map(
       (src) =>

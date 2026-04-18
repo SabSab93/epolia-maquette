@@ -2,11 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { PrimaryButton } from '../components/PrimaryButton'
 import { SecondaryButton } from '../components/SecondaryButton'
-import slide1 from '../assets/images/auth/connexion-img-1.jpg'
-import slide2 from '../assets/images/auth/connexion-img-2.jpg'
-import slide3 from '../assets/images/auth/connexion-img-3.jpg'
-
-const slides = [slide1, slide2, slide3]
+import { onboardingSlides } from '../data/onboardingSlides'
 
 export function OnboardingPage() {
   const navigate = useNavigate()
@@ -17,7 +13,7 @@ export function OnboardingPage() {
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % slides.length)
+      setActiveSlide((current) => (current + 1) % onboardingSlides.length)
     }, 4200)
 
     return () => window.clearInterval(interval)
@@ -71,7 +67,7 @@ export function OnboardingPage() {
       <div className="mx-auto flex min-h-screen w-full max-w-[430px] flex-col p-5">
         <div className="mx-auto w-full max-w-[360px]">
           <div className="mb-3 flex items-center justify-center gap-2">
-            {slides.map((_, index) => (
+            {onboardingSlides.map((_, index) => (
               <span
                 key={`onboarding-bar-${index}`}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
@@ -83,18 +79,18 @@ export function OnboardingPage() {
             ))}
           </div>
 
-          <div className="relative h-[330px] overflow-hidden rounded-2xl bg-transparent">
+          <div className="relative h-[330px] overflow-hidden rounded-[28px] p-1.5 ring-1 ring-[#A592D4]/25">
             <div
               ref={sliderRef}
               onScroll={handleSliderScroll}
               className="hide-scrollbar flex h-full snap-x snap-mandatory overflow-x-auto scroll-smooth"
             >
-              {slides.map((slide, index) => (
+              {onboardingSlides.map((slide, index) => (
                 <img
                   key={`onboarding-slide-${index}`}
                   src={slide}
                   alt={`Onboarding ${index + 1}`}
-                  className="h-full w-full min-w-full snap-center object-contain"
+                  className="h-full w-full min-w-full snap-center rounded-[22px] object-cover"
                   loading={index === 0 ? 'eager' : 'lazy'}
                 />
               ))}

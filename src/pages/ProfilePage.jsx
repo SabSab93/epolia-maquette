@@ -3,13 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { FaChevronDown, FaChevronUp, FaCog, FaEuroSign, FaGraduationCap, FaRegClock, FaShareAlt } from 'react-icons/fa'
 import { MobileShell } from '../components/MobileShell'
 import { useAuth } from '../contexts/AuthContext'
-import profil1 from '../assets/images/profil/profil1.png'
-import profil2 from '../assets/images/profil/profil2.png'
-import profil3 from '../assets/images/profil/profil3.png'
-import profil4 from '../assets/images/profil/profil4.png'
-import profil5 from '../assets/images/profil/profil5.png'
-import profil6 from '../assets/images/profil/profil6.png'
-import profil7 from '../assets/images/profil/profil7.png'
+import { profileAvatars } from '../data/profileAvatars'
 
 export function ProfilePage() {
   const navigate = useNavigate()
@@ -17,7 +11,6 @@ export function ProfilePage() {
   const isStudent = user?.type === 'etudiant'
   const [openSection, setOpenSection] = useState(null)
   const profileAvatar = useMemo(() => {
-    const profileAvatars = [profil1, profil2, profil3, profil4, profil5, profil6, profil7]
     const randomIndex = Math.floor(Math.random() * profileAvatars.length)
     return profileAvatars[randomIndex]
   }, [])
