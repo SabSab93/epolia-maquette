@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import { EntryPage } from './pages/EntryPage'
 import { HomePage } from './pages/HomePage'
@@ -28,9 +29,20 @@ import { StudentProfileViewPage } from './pages/StudentProfileViewPage'
 import { PaymentBookingPage } from './pages/PaymentBookingPage'
 import { MessageReviewPage } from './pages/MessageReviewPage'
 
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
+
+  return null
+}
+
 export default function App() {
   return (
     <AuthProvider>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<EntryPage />} />
         <Route path="/fil-annonces" element={<HomePage />} />

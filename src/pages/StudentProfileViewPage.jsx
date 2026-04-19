@@ -96,6 +96,7 @@ export function StudentProfileViewPage() {
   const detailedDescription =
     profile.studentDescription ??
     'Cet étudiant est disponible pour des missions ponctuelles et s’adapte aux besoins des particuliers.'
+  const studyText = profile.formation ?? profile.currentStudy ?? profile.studentFormation ?? ''
   const portfolioProjects =
     profile.portfolioProjects ??
     (profile.portfolioImages ?? []).map((image, index) => ({
@@ -139,6 +140,7 @@ export function StudentProfileViewPage() {
               <div>
                 <h1 className="text-lg font-bold text-epolia-purple">{profile.name}</h1>
                 <p className="text-sm text-epolia-muted">{profile.location}</p>
+                {studyText ? <p className="mt-1 text-sm text-epolia-muted">{studyText}</p> : null}
               </div>
             </div>
 

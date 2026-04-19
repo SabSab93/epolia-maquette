@@ -65,6 +65,7 @@ export const marketplaceProfiles = [
     price: 26,
     category: 'Web',
     skills: ['App React Native', 'UI mobile', 'MVP'],
+    formation: 'Master Informatique mobile',
     studentDescription:
       "J'aime transformer des idées du quotidien en applications utiles et faciles à utiliser. J'avance étape par étape, avec des retours réguliers pour livrer un résultat concret et fiable.",
     quality: 'Réactif',
@@ -125,6 +126,7 @@ export const marketplaceProfiles = [
     price: 22,
     category: 'Design',
     skills: ['Carte mariage', 'Invitation', 'Illustration'],
+    formation: 'DN MADE Graphisme',
     studentDescription:
       "J'aime créer des univers visuels élégants pour les événements de vie. Je travaille chaque détail avec soin pour que le rendu final ressemble vraiment à votre histoire.",
     quality: 'Top qualité',
@@ -185,6 +187,7 @@ export const marketplaceProfiles = [
     price: 21,
     category: 'Cours',
     skills: ['Conversation', 'Aide devoirs', 'Prépa oral'],
+    formation: 'Licence LEA Anglais',
     studentDescription:
       "J'aime rendre l'anglais plus naturel et moins stressant au quotidien. Mes cours sont simples, pratiques et adaptés à votre niveau pour progresser vite à l'oral.",
     quality: 'Pédagogue',
@@ -245,6 +248,7 @@ export const marketplaceProfiles = [
     price: 23,
     category: 'Cours',
     skills: ['Maths collège/lycée', 'Physique', 'Méthodologie'],
+    formation: 'Licence Physique',
     studentDescription:
       "J'aime expliquer les notions difficiles de façon claire et progressive. Mon objectif est de redonner confiance avec une méthode structurée et des exercices ciblés.",
     quality: 'Scientifique',
@@ -305,6 +309,7 @@ export const marketplaceProfiles = [
     price: 25,
     category: 'Coiffure',
     skills: ['Brushing', 'Tresses', 'Coupe femme'],
+    formation: 'CAP Coiffure',
     studentDescription:
       "J'aime proposer des coiffures soignées à domicile, dans une ambiance simple et agréable. Je prends le temps d'écouter vos envies avant chaque prestation.",
     quality: 'Soignée',
@@ -365,6 +370,7 @@ export const marketplaceProfiles = [
     price: 29,
     category: 'Cuisine',
     skills: ['Batch cooking', 'Menu famille', 'Dressage'],
+    formation: 'CAP Cuisine',
     studentDescription:
       "J'aime cuisiner des repas maison généreux et équilibrés pour faciliter votre semaine. Je m'adapte à vos goûts et à vos contraintes pour une prestation utile au quotidien.",
     quality: 'Organisé',
