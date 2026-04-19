@@ -1,20 +1,17 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FaChevronDown, FaChevronUp, FaCog, FaEuroSign, FaGraduationCap, FaRegClock, FaShareAlt } from 'react-icons/fa'
 import { MobileShell } from '../components/MobileShell'
 import { useAuth } from '../contexts/AuthContext'
-import { profileAvatars } from '../data/profileAvatars'
 import { readStoredNavMode } from '../utils/navMode'
+import { getProfileAvatar } from '../utils/profileAvatar'
 
 export function ProfilePage() {
   const navigate = useNavigate()
   const { user, logout } = useAuth()
   const isStudent = user?.type === 'etudiant' || (!user && readStoredNavMode() === 'etudiant')
   const [openSection, setOpenSection] = useState(null)
-  const profileAvatar = useMemo(() => {
-    const randomIndex = Math.floor(Math.random() * profileAvatars.length)
-    return profileAvatars[randomIndex]
-  }, [])
+  const profileAvatar = getProfileAvatar(user)
 
   const currentMissions = [
     { id: 'm1', title: 'Aide aux devoirs (maths)', date: '24 avril 2026' },

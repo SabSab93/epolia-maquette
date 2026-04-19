@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { MobileShell } from '../components/MobileShell'
 import { useAuth } from '../contexts/AuthContext'
+import { getProfileAvatar } from '../utils/profileAvatar'
 
 const CGU_STORAGE_KEY = 'epolia-student-cgu-accepted'
 const PROFILE_ONLINE_STORAGE_KEY = 'epolia-student-profile-online'
@@ -20,9 +21,7 @@ export function StudentDashboardPage() {
     typeof window !== 'undefined' && window.sessionStorage.getItem(PROFILE_ONLINE_STORAGE_KEY) === 'true'
   )
 
-  const profileAvatar =
-    user?.avatar ??
-    'https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&w=300&q=80'
+  const profileAvatar = getProfileAvatar(user)
 
   const currentMissions = [
     {
@@ -127,7 +126,7 @@ export function StudentDashboardPage() {
             <img
               src={profileAvatar}
               alt="Photo de profil"
-              className="h-11 w-11 rounded-full border-2 border-[#A592D4]/55 bg-[#F3E8CC] object-cover"
+              className="h-11 w-11 rounded-full border-2 border-[#A592D4]/55 bg-[#C3E841] object-cover"
             />
           </div>
           <div className="h-px w-full bg-[#A592D4]/35" />
