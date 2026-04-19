@@ -23,6 +23,7 @@ export function PaymentBookingPage() {
 
   const [hours, setHours] = useState(2)
   const [note, setNote] = useState('')
+  const [showPaymentSuccessModal, setShowPaymentSuccessModal] = useState(false)
 
   const totalPrice = useMemo(() => hours * hourlyRate, [hours, hourlyRate])
 
@@ -112,10 +113,37 @@ export function PaymentBookingPage() {
           </div>
         </section>
 
-        <PrimaryButton onClick={() => navigate('/messages')}>
+        <PrimaryButton onClick={() => setShowPaymentSuccessModal(true)}>
           Payer {formatEuro(totalPrice)}
         </PrimaryButton>
       </div>
+
+      {showPaymentSuccessModal ? (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[#1A1A1A]/55 p-4">
+          <section className="w-full max-w-[430px] rounded-3xl bg-white p-5 shadow-lg">
+            <p className="text-xs uppercase tracking-[0.12em] text-epolia-muted">Paiement confirmé</p>
+            <h2 className="mt-2 text-xl font-bold text-epolia-purple">Merci de votre confiance</h2>
+            <p className="mt-3 text-sm leading-relaxed text-epolia-text">
+              Merci pour le test. Nous avons simplifié le parcours de paiement. Le montant de{' '}
+              <span className="font-semibold text-[#58126A]">{formatEuro(totalPrice)}</span> est bien pris en compte
+              et sécurisé jusqu&apos;à la fin de mission confirmée par l&apos;utilisateur.
+            </p>
+            <button
+              type="button"
+              onClick={() =>
+                navigate('/messages', {
+                  state: {
+                    openConversationId: booking.conversationId
+                  }
+                })
+              }
+              className="mt-5 w-full rounded-2xl bg-epolia-orange px-4 py-3 text-sm font-semibold text-white"
+            >
+              Retour à la conversation
+            </button>
+          </section>
+        </div>
+      ) : null}
     </MobileShell>
   )
 }
