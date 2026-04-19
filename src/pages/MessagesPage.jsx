@@ -15,6 +15,7 @@ export function MessagesPage() {
   const [activeConversationId, setActiveConversationId] = useState(null)
   const [draft, setDraft] = useState('')
   const [showMissionEndModal, setShowMissionEndModal] = useState(false)
+  const [showNegotiationModal, setShowNegotiationModal] = useState(false)
   const isStudent = user?.type === 'etudiant' || (!user && readStoredNavMode() === 'etudiant')
   const isM3MissionCompleted =
     typeof window !== 'undefined' && window.sessionStorage.getItem(M3_COMPLETED_STORAGE_KEY) === 'true'
@@ -165,6 +166,24 @@ export function MessagesPage() {
     }
   }, [location.state])
 
+  useEffect(() => {
+    if (isStudent) return
+    const incomingConversation = location.state?.startConversation
+    if (!incomingConversation) return
+
+    setConversations((previousConversations) => {
+      const alreadyExists = previousConversations.some((conversation) => conversation.id === incomingConversation.id)
+      if (alreadyExists) {
+        return previousConversations
+      }
+      return [incomingConversation, ...previousConversations]
+    })
+
+    if (location.state?.showNegotiationInfo) {
+      setShowNegotiationModal(true)
+    }
+  }, [isStudent, location.state])
+
   return (
     <MobileShell withNav>
       {activeConversation ? (
@@ -309,6 +328,26 @@ export function MessagesPage() {
                 Confirmer
               </button>
             </div>
+          </section>
+        </div>
+      ) : null}
+
+      {showNegotiationModal ? (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-[#1A1A1A]/55 p-4">
+          <section className="w-full max-w-[430px] rounded-3xl bg-white p-5 shadow-lg">
+            <p className="text-xs uppercase tracking-[0.12em] text-epolia-muted">Information</p>
+            <h2 className="mt-2 text-xl font-bold text-epolia-purple">Discutez avant de payer</h2>
+            <p className="mt-3 text-sm leading-relaxed text-epolia-text">
+              Vous pouvez échanger et négocier avec l&apos;étudiant dans cette conversation. Quand tout est validé,
+              utilisez le bouton <span className="font-semibold text-[#58126A]">Accepter et payer</span> pour choisir la durée de mission.
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowNegotiationModal(false)}
+              className="mt-5 w-full rounded-2xl bg-epolia-orange px-4 py-3 text-sm font-semibold text-white"
+            >
+              Compris
+            </button>
           </section>
         </div>
       ) : null}

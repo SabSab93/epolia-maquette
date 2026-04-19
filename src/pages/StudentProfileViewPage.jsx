@@ -2,6 +2,7 @@ import { FaChevronLeft, FaStar } from 'react-icons/fa'
 import { useMemo } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { MobileShell } from '../components/MobileShell'
+import { useAuth } from '../contexts/AuthContext'
 import { marketplaceProfiles } from '../data/mockData'
 
 const MONTHS_FR = {
@@ -64,6 +65,7 @@ function formatToJJMMAAAA(rawDate) {
 export function StudentProfileViewPage() {
   const location = useLocation()
   const navigate = useNavigate()
+  const { user } = useAuth()
   const { id } = useParams()
   const profile = useMemo(() => {
     if (location.state?.user) {
@@ -119,7 +121,7 @@ export function StudentProfileViewPage() {
 
   return (
     <MobileShell>
-      <div className="space-y-4 p-4 pb-8">
+      <div className="space-y-4 p-4 pb-28">
         <button
           type="button"
           onClick={() => navigate(-1)}
@@ -243,6 +245,49 @@ export function StudentProfileViewPage() {
             ))}
           </div>
         </section>
+      </div>
+
+      <div className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-1/2 z-30 w-[calc(100%-2rem)] max-w-[398px] -translate-x-1/2">
+        <button
+          type="button"
+          onClick={() =>
+            !user
+              ? navigate('/')
+              : navigate('/messages', {
+                  state: {
+                    openConversationId: `contact-${profile.id}`,
+                    showNegotiationInfo: true,
+                    startConversation: {
+                      id: `contact-${profile.id}`,
+                      from: profile.name,
+                      avatar: profile.avatar,
+                      hourlyRate: profile.price,
+                      requiresPayment: true,
+                      unread: true,
+                      preview: `Bonjour ${profile.name}, je souhaite discuter de ma mission.`,
+                      time: 'Maintenant',
+                      thread: [
+                        {
+                          id: `contact-${profile.id}-1`,
+                          from: 'system',
+                          text: 'Vous pouvez discuter et négocier les modalités avec l’étudiant avant de valider le paiement.',
+                          time: 'Maintenant'
+                        },
+                        {
+                          id: `contact-${profile.id}-2`,
+                          from: 'me',
+                          text: `Bonjour ${profile.name}, je souhaite discuter de ma mission.`,
+                          time: 'Maintenant'
+                        }
+                      ]
+                    }
+                  }
+                })
+          }
+          className="w-full rounded-2xl bg-epolia-orange px-4 py-3 text-sm font-semibold text-white shadow-sm"
+        >
+          Contacter
+        </button>
       </div>
     </MobileShell>
   )
