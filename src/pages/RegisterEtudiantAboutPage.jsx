@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { FaChevronLeft } from 'react-icons/fa'
 import { MobileShell } from '../components/MobileShell'
 import { PrimaryButton } from '../components/PrimaryButton'
+import { useAuth } from '../contexts/AuthContext'
 import {
   clearStudentRegistrationProgress,
   loadStudentRegistrationProgress,
@@ -21,6 +22,7 @@ const EMPTY_PROFILE_FORM = {
 export function RegisterEtudiantAboutPage() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { registerEtudiant } = useAuth()
 
   const data = useMemo(() => {
     const saved = loadStudentRegistrationProgress()
@@ -230,6 +232,10 @@ export function RegisterEtudiantAboutPage() {
             type="button"
             disabled={!description.trim()}
             onClick={() => {
+              registerEtudiant({
+                firstName: data.profileForm.firstName,
+                email: data.profileForm.email
+              })
               clearStudentRegistrationProgress()
               navigate('/dashboard-etudiant', {
                 replace: true,

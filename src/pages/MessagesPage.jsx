@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { MobileShell } from '../components/MobileShell'
 import { useAuth } from '../contexts/AuthContext'
 import { messages } from '../data/mockData'
+import { readStoredNavMode } from '../utils/navMode'
 
 const M3_COMPLETED_STORAGE_KEY = 'epolia-m3-mission-completed'
 
@@ -14,7 +15,7 @@ export function MessagesPage() {
   const [activeConversationId, setActiveConversationId] = useState(null)
   const [draft, setDraft] = useState('')
   const [showMissionEndModal, setShowMissionEndModal] = useState(false)
-  const isStudent = user?.type === 'etudiant'
+  const isStudent = user?.type === 'etudiant' || (!user && readStoredNavMode() === 'etudiant')
   const isM3MissionCompleted =
     typeof window !== 'undefined' && window.sessionStorage.getItem(M3_COMPLETED_STORAGE_KEY) === 'true'
 

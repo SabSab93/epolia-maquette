@@ -29,7 +29,12 @@ export function RegisterParticulierPage() {
       email: form.email,
       city: form.city
     })
-    navigate('/')
+    navigate('/fil-annonces', {
+      replace: true,
+      state: {
+        showCguModal: true
+      }
+    })
   }
 
   return (

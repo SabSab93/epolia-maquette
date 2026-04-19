@@ -1,6 +1,8 @@
 import { createContext, useContext, useMemo, useState } from 'react'
+import { clearStoredNavMode, writeStoredNavMode } from '../utils/navMode'
 
 const AuthContext = createContext(null)
+const AUTH_STORAGE_KEY = 'epolia-auth-user'
 
 function normalizeText(value = '') {
   return value
@@ -32,16 +34,37 @@ function buildUserFromEmail(rawEmail = '') {
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(() => {
+    if (typeof window === 'undefined') return null
 
-  const login = ({ email }) => {
-    const nextUser = buildUserFromEmail(email)
+    const raw = window.sessionStorage.getItem(AUTH_STORAGE_KEY)
+    if (!raw) return null
+
+    try {
+      return JSON.parse(raw)
+    } catch {
+      return null
+    }
+  })
+
+  const saveUser = (nextUser) => {
     setUser(nextUser)
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(nextUser))
+    }
+    if (nextUser?.type) {
+      writeStoredNavMode(nextUser.type)
+    }
     return nextUser
   }
 
+  const login = ({ email }) => {
+    const nextUser = buildUserFromEmail(email)
+    return saveUser(nextUser)
+  }
+
   const registerParticulier = ({ firstName, email, city }) => {
-    setUser({
+    return saveUser({
       type: 'particulier',
       firstName,
       email,
@@ -49,10 +72,25 @@ export function AuthProvider({ children }) {
     })
   }
 
-  const logout = () => setUser(null)
+  const registerEtudiant = ({ firstName, email }) => {
+    const nextUser = {
+      type: 'etudiant',
+      firstName: formatFirstName(firstName),
+      email: String(email ?? '').trim()
+    }
+    return saveUser(nextUser)
+  }
+
+  const logout = () => {
+    setUser(null)
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.removeItem(AUTH_STORAGE_KEY)
+    }
+    clearStoredNavMode()
+  }
 
   const value = useMemo(
-    () => ({ user, login, logout, registerParticulier }),
+    () => ({ user, login, logout, registerParticulier, registerEtudiant }),
     [user]
   )
 

@@ -4,11 +4,12 @@ import { FaChevronDown, FaChevronUp, FaCog, FaEuroSign, FaGraduationCap, FaRegCl
 import { MobileShell } from '../components/MobileShell'
 import { useAuth } from '../contexts/AuthContext'
 import { profileAvatars } from '../data/profileAvatars'
+import { readStoredNavMode } from '../utils/navMode'
 
 export function ProfilePage() {
   const navigate = useNavigate()
   const { user, logout } = useAuth()
-  const isStudent = user?.type === 'etudiant'
+  const isStudent = user?.type === 'etudiant' || (!user && readStoredNavMode() === 'etudiant')
   const [openSection, setOpenSection] = useState(null)
   const profileAvatar = useMemo(() => {
     const randomIndex = Math.floor(Math.random() * profileAvatars.length)

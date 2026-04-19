@@ -1,9 +1,32 @@
 import { Navbar } from './Navbar'
 import { useAuth } from '../contexts/AuthContext'
+import { useLocation } from 'react-router-dom'
+import { useEffect, useMemo } from 'react'
+import { readStoredNavMode, writeStoredNavMode } from '../utils/navMode'
 
 export function MobileShell({ children, withNav = false }) {
   const { user } = useAuth()
-  const showNav = withNav && Boolean(user)
+  const { pathname } = useLocation()
+  const isStudentRoute = pathname.startsWith('/dashboard-etudiant') || pathname.startsWith('/missions-etudiant')
+  const isSharedNavRoute = pathname.startsWith('/messages') || pathname === '/profil'
+  const storedNavMode = readStoredNavMode()
+
+  useEffect(() => {
+    if (user?.type === 'etudiant' || isStudentRoute) {
+      writeStoredNavMode('etudiant')
+    }
+    if (user?.type === 'particulier') {
+      writeStoredNavMode('particulier')
+    }
+  }, [isStudentRoute, user?.type])
+
+  const isStudentContext = useMemo(() => {
+    if (user?.type === 'etudiant') return true
+    if (isStudentRoute) return true
+    return isSharedNavRoute && storedNavMode === 'etudiant'
+  }, [isSharedNavRoute, isStudentRoute, storedNavMode, user?.type])
+
+  const showNav = withNav && (Boolean(user) || isStudentContext)
 
   return (
     <div className="epolia-page-bg min-h-screen">

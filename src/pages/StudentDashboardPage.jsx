@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { MobileShell } from '../components/MobileShell'
 import { useAuth } from '../contexts/AuthContext'
 
 const CGU_STORAGE_KEY = 'epolia-student-cgu-accepted'
 const PROFILE_ONLINE_STORAGE_KEY = 'epolia-student-profile-online'
+const STUDENT_ONBOARDING_POPUP_DONE_KEY = 'epolia-student-onboarding-popup-done'
 
 export function StudentDashboardPage() {
   const { user } = useAuth()
   const location = useLocation()
+  const navigate = useNavigate()
   const [showCguModal, setShowCguModal] = useState(false)
   const [isCguSheetVisible, setIsCguSheetVisible] = useState(false)
   const [showCongratsModal, setShowCongratsModal] = useState(false)
@@ -65,12 +67,15 @@ export function StudentDashboardPage() {
   const ongoingRevenue = currentMissions.reduce((sum, mission) => sum + mission.amount, 0)
 
   useEffect(() => {
-    const accepted = window.sessionStorage.getItem(CGU_STORAGE_KEY) === 'true'
-    if (location.state?.showCguModal && !accepted) {
+    const hasAlreadyCompletedFlow = window.sessionStorage.getItem(STUDENT_ONBOARDING_POPUP_DONE_KEY) === 'true'
+    if (location.state?.showCguModal && !hasAlreadyCompletedFlow) {
       setShowCguModal(true)
       setShouldPromptPublishing(true)
     }
-  }, [location.state])
+    if (location.state?.showCguModal) {
+      navigate(location.pathname, { replace: true })
+    }
+  }, [location.pathname, location.state, navigate])
 
   useEffect(() => {
     if (!showCguModal) {
@@ -96,12 +101,14 @@ export function StudentDashboardPage() {
 
   const publishProfileNow = () => {
     window.sessionStorage.setItem(PROFILE_ONLINE_STORAGE_KEY, 'true')
+    window.sessionStorage.setItem(STUDENT_ONBOARDING_POPUP_DONE_KEY, 'true')
     setIsProfileOnline(true)
     setShowCongratsModal(false)
   }
 
   const publishProfileLater = () => {
     window.sessionStorage.setItem(PROFILE_ONLINE_STORAGE_KEY, 'false')
+    window.sessionStorage.setItem(STUDENT_ONBOARDING_POPUP_DONE_KEY, 'true')
     setIsProfileOnline(false)
     setShowCongratsModal(false)
   }

@@ -1,5 +1,7 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { readStoredNavMode, writeStoredNavMode } from '../utils/navMode'
+import { useEffect, useMemo } from 'react'
 
 const particulierNavItems = [
   {
@@ -85,7 +87,27 @@ const etudiantNavItems = [
 
 export function Navbar() {
   const { user } = useAuth()
-  const navItems = user?.type === 'etudiant' ? etudiantNavItems : particulierNavItems
+  const { pathname } = useLocation()
+  const isStudentRoute = pathname.startsWith('/dashboard-etudiant') || pathname.startsWith('/missions-etudiant')
+  const isSharedNavRoute = pathname.startsWith('/messages') || pathname === '/profil'
+  const storedNavMode = readStoredNavMode()
+
+  useEffect(() => {
+    if (user?.type === 'etudiant' || isStudentRoute) {
+      writeStoredNavMode('etudiant')
+    }
+    if (user?.type === 'particulier') {
+      writeStoredNavMode('particulier')
+    }
+  }, [isStudentRoute, user?.type])
+
+  const isStudentContext = useMemo(() => {
+    if (user?.type === 'etudiant') return true
+    if (isStudentRoute) return true
+    return isSharedNavRoute && storedNavMode === 'etudiant'
+  }, [isSharedNavRoute, isStudentRoute, storedNavMode, user?.type])
+
+  const navItems = isStudentContext ? etudiantNavItems : particulierNavItems
 
   return (
     <nav className="fixed bottom-0 left-1/2 z-40 flex w-full max-w-[430px] -translate-x-1/2 items-center justify-between border-t border-epolia-purple/10 bg-white/95 px-3 pb-[max(0.8rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur">

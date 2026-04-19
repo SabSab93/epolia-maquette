@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { MobileShell } from '../components/MobileShell'
 import { ProfileCard } from '../components/ProfileCard'
 import { MapView } from '../components/MapView'
@@ -7,13 +7,18 @@ import { Logo } from '../components/Logo'
 import { useAuth } from '../contexts/AuthContext'
 import { marketplaceFilters, marketplaceProfiles } from '../data/mockData'
 
+const PARTICULIER_CGU_STORAGE_KEY = 'epolia-particulier-cgu-accepted'
+
 export function Home() {
   const navigate = useNavigate()
+  const location = useLocation()
   const { user } = useAuth()
   const [viewMode, setViewMode] = useState('list')
   const [query, setQuery] = useState('')
   const [activeFilter, setActiveFilter] = useState('Tout')
   const [selectedMapUserId, setSelectedMapUserId] = useState(null)
+  const [showCguModal, setShowCguModal] = useState(false)
+  const [isCguSheetVisible, setIsCguSheetVisible] = useState(false)
 
   const filteredUsers = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
@@ -37,6 +42,30 @@ export function Home() {
       setSelectedMapUserId(null)
     }
   }, [filteredUsers, selectedMapUserId])
+
+  useEffect(() => {
+    if (user?.type === 'particulier' && location.state?.showCguModal) {
+      setShowCguModal(true)
+    }
+  }, [location.state, user?.type])
+
+  useEffect(() => {
+    if (!showCguModal) {
+      setIsCguSheetVisible(false)
+      return
+    }
+
+    const animationFrame = window.requestAnimationFrame(() => {
+      setIsCguSheetVisible(true)
+    })
+
+    return () => window.cancelAnimationFrame(animationFrame)
+  }, [showCguModal])
+
+  const acceptCgu = () => {
+    window.sessionStorage.setItem(PARTICULIER_CGU_STORAGE_KEY, 'true')
+    setShowCguModal(false)
+  }
 
   const selectedMapUser = useMemo(
     () => filteredUsers.find((user) => user.id === selectedMapUserId) ?? null,
@@ -146,6 +175,30 @@ export function Home() {
           )}
         </section>
       </div>
+
+      {showCguModal ? (
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-[#1A1A1A]/55">
+          <section
+            className={`mb-[calc(5.5rem+env(safe-area-inset-bottom))] w-[calc(100%-2rem)] max-w-[398px] rounded-3xl bg-white p-5 shadow-lg transition-all duration-300 ${
+              isCguSheetVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+            }`}
+          >
+            <p className="text-xs uppercase tracking-[0.12em] text-epolia-muted">CGU</p>
+            <h2 className="mt-2 text-xl font-bold text-epolia-purple">Responsabilités et conditions</h2>
+            <p className="mt-3 text-sm leading-relaxed text-epolia-text">
+              En continuant, vous confirmez l&apos;exactitude des informations fournies et acceptez les conditions
+              générales d&apos;utilisation d&apos;Epolia.
+            </p>
+            <button
+              type="button"
+              onClick={acceptCgu}
+              className="mt-5 w-full rounded-2xl bg-epolia-orange px-4 py-3 text-sm font-semibold text-white transition hover:brightness-95"
+            >
+              J&apos;accepte les CGU
+            </button>
+          </section>
+        </div>
+      ) : null}
     </MobileShell>
   )
 }
