@@ -66,7 +66,7 @@ export function RegisterEtudiantFormationsPage() {
       portfolios
     })
   }, [data.profileForm, formations, portfolios])
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(2)
+  const { progressPercent } = getStudentRegistrationProgress(2)
 
   return (
     <MobileShell>
@@ -97,7 +97,6 @@ export function RegisterEtudiantFormationsPage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Ajouter une formation</h1>
         </header>
 

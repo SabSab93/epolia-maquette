@@ -105,7 +105,7 @@ export function RegisterEtudiantPortfolioPage() {
     })
   }, [form, initialData])
 
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(3)
+  const { progressPercent } = getStudentRegistrationProgress(3)
   const canSubmit = Boolean(form.title.trim() && form.description.trim() && form.images.length > 0)
 
   const handleImagesChange = (event) => {
@@ -210,7 +210,6 @@ export function RegisterEtudiantPortfolioPage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Ajouter un portfolio</h1>
         </header>
 

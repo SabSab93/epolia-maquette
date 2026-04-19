@@ -86,7 +86,7 @@ export function RegisterEtudiantPresentationPage() {
     })
   }, [data.profileForm, data.formations, data.portfolios, data.selectedCategories, data.keySkills, data.keyQualities, presentationText])
 
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(4)
+  const { progressPercent } = getStudentRegistrationProgress(4)
   const canContinue = Boolean(presentationText.trim())
 
   return (
@@ -122,7 +122,6 @@ export function RegisterEtudiantPresentationPage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Comment souhaitez-vous être présenté ?</h1>
           <p className="text-sm text-epolia-muted">
             Cette description servira à orienter les catégories suggérées (ex: artistique, création, digital).

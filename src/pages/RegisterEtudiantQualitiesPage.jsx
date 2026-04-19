@@ -103,7 +103,7 @@ export function RegisterEtudiantQualitiesPage() {
     data.lifeOutsideStudies
   ])
 
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(7)
+  const { progressPercent } = getStudentRegistrationProgress(7)
 
   const addQuality = (rawValue) => {
     const value = rawValue.trim()
@@ -148,7 +148,6 @@ export function RegisterEtudiantQualitiesPage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Vos 5 qualité clés</h1>
         </header>
 

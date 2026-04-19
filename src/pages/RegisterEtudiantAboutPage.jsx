@@ -137,7 +137,7 @@ export function RegisterEtudiantAboutPage() {
     profileImage
   ])
 
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(11)
+  const { progressPercent } = getStudentRegistrationProgress(11)
 
   const handleImageChange = (event) => {
     const file = event.target.files?.[0]
@@ -191,7 +191,6 @@ export function RegisterEtudiantAboutPage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Une description de vous</h1>
 
         </header>

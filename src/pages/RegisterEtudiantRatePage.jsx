@@ -158,7 +158,7 @@ export function RegisterEtudiantRatePage() {
     data.studentProfileImage
   ])
 
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(10)
+  const { progressPercent } = getStudentRegistrationProgress(10)
 
   return (
     <MobileShell>
@@ -199,7 +199,6 @@ export function RegisterEtudiantRatePage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Déterminons votre taux horaire</h1>
           <p className="text-sm text-epolia-muted">
             Indiquez votre tarif affiché, nous calculons automatiquement votre montant net.

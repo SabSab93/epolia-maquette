@@ -123,7 +123,7 @@ export function RegisterEtudiantLifePage() {
     data.hourlyRateNet
   ])
 
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(8)
+  const { progressPercent } = getStudentRegistrationProgress(8)
 
   const addLifeTag = (rawValue) => {
     const value = rawValue.trim()
@@ -170,7 +170,6 @@ export function RegisterEtudiantLifePage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Ma vie en dehors des études</h1>
           <p className="text-sm text-epolia-muted">Ajoutez vos centres d’intérêt avec Entrée.</p>
         </header>

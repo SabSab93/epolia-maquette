@@ -85,7 +85,7 @@ export function RegisterEtudiantPortfoliosPage() {
     })
   }, [data.profileForm, data.formations, portfolios, data.presentationText, data.selectedCategories, data.keySkills, data.keyQualities])
 
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(3)
+  const { progressPercent } = getStudentRegistrationProgress(3)
 
   return (
     <MobileShell>
@@ -120,7 +120,6 @@ export function RegisterEtudiantPortfoliosPage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Portfolio & réalisations</h1>
         </header>
 

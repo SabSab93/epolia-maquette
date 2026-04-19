@@ -91,7 +91,7 @@ export function RegisterEtudiantCategoriesPage() {
     })
   }, [data.profileForm, data.formations, data.portfolios, data.presentationText, selectedCategories, data.keySkills, data.keyQualities])
 
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(5)
+  const { progressPercent } = getStudentRegistrationProgress(5)
 
   const toggleCategory = (categoryId) => {
     setSelectedCategories((current) =>
@@ -132,7 +132,6 @@ export function RegisterEtudiantCategoriesPage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Cochez les catégories qui vous correspondent</h1>
           <p className="text-sm text-epolia-muted">
             Ces catégories sont proposées à partir de votre présentation pour mieux orienter votre profil dans les recherches.

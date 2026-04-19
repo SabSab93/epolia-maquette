@@ -84,7 +84,7 @@ export function RegisterEtudiantPreviewPage() {
     })
   }, [currentStep, form, formations, portfolios])
 
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(1)
+  const { progressPercent } = getStudentRegistrationProgress(1)
   const profileStepComplete = Boolean(
     form.lastName.trim() &&
       form.firstName.trim() &&
@@ -120,7 +120,6 @@ export function RegisterEtudiantPreviewPage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Inscription étudiant</h1>
         </header>
 

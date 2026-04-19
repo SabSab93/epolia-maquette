@@ -87,7 +87,7 @@ export function RegisterEtudiantSkillsPage() {
     })
   }, [data.profileForm, data.formations, data.portfolios, data.presentationText, data.selectedCategories, skills, data.keyQualities])
 
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(6)
+  const { progressPercent } = getStudentRegistrationProgress(6)
 
   const addSkill = (rawValue) => {
     const value = rawValue.trim()
@@ -131,7 +131,6 @@ export function RegisterEtudiantSkillsPage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Vos 4 compétences clé</h1>
         </header>
 

@@ -123,7 +123,7 @@ export function RegisterEtudiantAvailabilityPage() {
     data.hourlyRateNet
   ])
 
-  const { progressPercent, progressLabel } = getStudentRegistrationProgress(9)
+  const { progressPercent } = getStudentRegistrationProgress(9)
 
   const addAvailability = (rawValue) => {
     const value = rawValue.trim()
@@ -170,7 +170,6 @@ export function RegisterEtudiantAvailabilityPage() {
               </div>
             </section>
           </div>
-          <p className="text-center text-xs font-semibold text-[#58126A]/70">{progressLabel}</p>
           <h1 className="text-3xl font-bold text-epolia-purple">Quels sont vos disponibilités ?</h1>
         </header>
 
