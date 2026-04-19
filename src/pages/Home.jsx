@@ -44,10 +44,15 @@ export function Home() {
   }, [filteredUsers, selectedMapUserId])
 
   useEffect(() => {
-    if (user?.type === 'particulier' && location.state?.showCguModal) {
-      setShowCguModal(true)
+    const shouldShowCgu = user?.type === 'particulier' && location.state?.showCguModal
+    if (shouldShowCgu) {
+      const hasAcceptedCgu = window.sessionStorage.getItem(PARTICULIER_CGU_STORAGE_KEY) === 'true'
+      if (!hasAcceptedCgu) {
+        setShowCguModal(true)
+      }
+      navigate(location.pathname, { replace: true })
     }
-  }, [location.state, user?.type])
+  }, [location.pathname, location.state, navigate, user?.type])
 
   useEffect(() => {
     if (!showCguModal) {
